@@ -1,0 +1,3 @@
+== RAILS DEMO APPLICATION ==
+Rails 4.2.4
+Ruby 2.2.3
