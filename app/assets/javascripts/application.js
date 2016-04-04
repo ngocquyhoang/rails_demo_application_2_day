@@ -12,5 +12,21 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
+//= require tether
+//= require materialize/extras/nouislider
+//= require materialize-sprockets
+
+$( document ).ready(function(){
+  $(".button-collapse").sideNav();
+  close_nav();
+})
+function close_nav() {
+  $("a.close-nav").click(function(){
+    $('.button-collapse').sideNav('hide');
+  });
+}
+// on load hide preloaded
+$(window).load(function() {
+  $("#pre-loader").fadeOut(750);
+});
