@@ -34,7 +34,11 @@
           <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a class="waves-effect waves-light" href="sass.html"><i class="material-icons left">input</i> Sign in</a></li>
-            <li><a class="waves-effect waves-light" href="badges.html"><i class="material-icons left">perm_identity</i> Blogger</a></li>
+            <li>
+              <%= link_to(blogger_path, :class => 'waves-effect waves-light') do %>
+                <i class="material-icons left">perm_identity</i> Blogger
+              <% end %>
+            </li>
             <li><a class="waves-effect waves-light" href="badges.html"><i class="material-icons left">picture_in_picture</i> Blog</a></li>
           </ul>
           <ul class="side-nav" id="mobile-menu">
@@ -54,13 +58,13 @@
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
-            <h5 class="white-text">Demo App</h5>
-            <p class="grey-text text-lighten-4">
+            <h5 class="white-text flow-text">Demo App</h5>
+            <p class="grey-text text-lighten-4 ">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac condimentum dolor. Donec congue vehicula venenatis. Curabitur cursus ullamcorper efficitur. Aliquam condimentum libero eu tortor efficitur hendrerit. Maecenas commodo sodales ante, in auctor justo vestibulum non.
             </p>
           </div>
           <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Latest Blog</h5>
+            <h5 class="white-text flow-text">Latest Blog</h5>
             <ul>
               <li><a class="grey-text text-lighten-3" href="#">Link 1</a></li>
               <li><a class="grey-text text-lighten-3" href="#">Link 2</a></li>
@@ -72,9 +76,9 @@
       </div>
       <div class="footer-copyright">
         <div class="container">
-          © 2016 Copyright by Framgia VietNam
+          © 2016 Copyright by @@@
           <a class="grey-text text-lighten-4 right" href="#">Blog</a>
-          <a class="grey-text text-lighten-4 right" href="#">Blogger</a>
+          <%= link_to('Blogger', blogger_path , :class => 'grey-text text-lighten-4 right') %>
           <a class="grey-text text-lighten-4 right" href="#">Sign in</a>
         </div>
       </div>
