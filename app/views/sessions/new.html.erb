@@ -1,0 +1,35 @@
+<% provide(:title, "Sign in") %>
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h1 class="center flow-text">SIGN IN</h1>
+      <%= form_for(:session, url: sign_in_path) do |f| %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.email_field :email, :class => "validate", :required => true %>
+            <label for="user_name">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.password_field :password, :class => "validate", :required => true %>
+            <label for="user_email">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.check_box :stay_signed, {:checked=>true}%>
+            <label for="session_stay_signed">Stay signed in</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 right-align">
+            <%= button_tag(type: "submit", class: "waves-effect waves-light btn-large") do %>
+              <i class="material-icons right">input</i> Sign in
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

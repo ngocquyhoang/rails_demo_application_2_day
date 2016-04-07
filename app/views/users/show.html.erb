@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col s12 m3 l4">
         <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-          <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="user-avatar circle responsive-img">
+          <%= gravatar_large_for @user %>
         </div>
       </div>
       <div class="col m9 l8">
@@ -13,11 +13,11 @@
             <thead>
               <tr>
                   <th colspan="2" class="center flow-text"><%= @user.name %> 's Profile
-                    <!-- if sign in -->
+                    <% if  user_signed_in? && @user == current_user %>
                     <a href="#edit_user_detail" class="waves-effect waves-light btn-floating modal-trigger btn right <%= random_color %> tooltipped"  data-position="bottom" data-delay="0" data-tooltip="Edit your Frofile" data-id="<%= @user.id %>">
                       <i class="material-icons">mode_edit</i>
                     </a>
-
+                    <% end %>
                   </th>
               </tr>
             </thead>
@@ -31,14 +31,14 @@
             </tr>
             <tr>
               <td>Address</td>
-              <td class="right-align" id="user_address">No 13 Cau Giay, Ha Noi</td>
+              <td class="right-align" id="user_address"><%= @user.address %></td>
             </tr>
             <tr>
               <td>Phone</td>
-              <td class="right-align" id="user_phone">123456789</td>
+              <td class="right-align" id="user_phone"><%= @user.phone %></td>
             </tr>
             <tr>
-              <td>Blog writed</td>
+              <td>Blog</td>
               <td class="right-align">123</td>
             </tr>
             <tr>
@@ -50,7 +50,11 @@
       </div>
     </div>
   </div>
-  <p class="center flow-text">Latest Blog <a class="btn-floating waves-effect waves-light btn-large <%= random_color %> right tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow <%= @user.name %>" data-follow="false" id="follow_user"><i class="large material-icons left">favorite</i>button</a></p>
+  <p class="center flow-text">Latest Blog 
+  <% if  user_signed_in? && @user != current_user %>
+    <a class="btn-floating waves-effect waves-light btn-large <%= random_color %> right tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow <%= @user.name %>" data-follow="true" id="follow_user"><i class="large material-icons left">favorite</i>button</a>
+  <% end %>
+  </p>
   <div class="divider"></div>
   <div class="section">
     <div class="row">
@@ -96,75 +100,85 @@
     </div>
   </div>
 </div>
-<!-- if sign in -->
-<div id="edit_user_detail" class="modal">
-  <div class="modal-content">
-    <h4 class="flow-text center">Edit Your Profile</h4>
-    <div class="row" id="modal_content">
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s6">
-            <input disabled value="<%= @user.name %>" id="disabled" type="text" class="validate">
-            <label for="disabled">Name</label>
+<% if  user_signed_in? %>
+  <% if @user == current_user %>
+  <div id="edit_user_detail" class="modal">
+    <div class="modal-content">
+      <h4 class="flow-text center">Edit Your Profile</h4>
+      <div class="row" id="modal_content">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input disabled value="<%= @user.name %>" id="disabled" type="text" class="validate">
+              <label for="disabled">Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input disabled value="<%= @user.email %>" id="disabled" type="text" class="validate">
+              <label for="disabled">Email</label>
+            </div>
           </div>
-          <div class="input-field col s6">
-            <input disabled value="<%= @user.email %>" id="disabled" type="text" class="validate">
-            <label for="disabled">Email</label>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="address" type="text" class="validate" value="<%= @user.address %>">
+              <label for="address">Address</label>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="address" type="text" class="validate">
-            <label for="address">Address</label>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="phone" type="tel" class="validate" value="<%= @user.phone %>">
+              <label for="phone">Phone</label>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="phone" type="tel" class="validate">
-            <label for="phone">Phone</label>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a onclick="edit_profile(<%= @user.id %>)" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
     </div>
   </div>
-  <div class="modal-footer">
-    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
-    <a href="#" onclick="edit_profile(<%= @user.id %>)" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-  </div>
-</div>
 
-<script type="text/javascript">
-  function edit_profile(user_id) {
-    // call ajax
-    var phone = $('#phone').val();
-    var address = $('#address').val();
-    $.ajax({
-      url: '/users/update_profile',
-      type: 'POST',
-      data: {phone: phone, address: address, id_user: <%= @user.id %>},
-      success: function(data) {
-        if (data["status"] == "success") {
-          Materialize.toast('Successfull update your profile !', 4000,'rounded');
-          $('#user_phone').val(data["phone"]);
-          $('#user_address').val(data["address"]); 
+  <script type="text/javascript">
+    function edit_profile(user_id) {
+      var phone = $('#phone').val();
+      var address = $('#address').val();
+      $.ajax({
+        url: '/users/update_profile',
+        type: 'POST',
+        data: {phone: phone, address: address, id_user: <%= @user.id %>},
+        success: function(data) {
+          if (data["status"] == "success") {
+            Materialize.toast('Successfull update your profile !', 4000,'rounded');
+            $('#user_phone').text(data["phone"]);
+            $('#user_address').text(data["address"]); 
+          }else{
+            Materialize.toast('Error please reload page !', 4000,'rounded');
+          }
         }
+      })
+    };
+  </script>
+  <% else %>
+  <script type="text/javascript">
+    $('#follow_user').click(function(event) {
+      if ($(this).attr('data-follow') == "false") {
+        // call ajax follow
+        // success
+        Materialize.toast('You are followed <%= @user.name%>' , 4000,'rounded');
+        $(this).attr('data-follow', "true");
+      }else{
+        // call ajax un follow
+        // success
+        Materialize.toast('You are unfollow <%= @user.name%>' , 4000,'rounded');
+        $(this).attr('data-follow', "false");
       }
-    })
-  }
-  // $('#follow_user').click(function(event) {
-  //   follow_user();
-  // });
-
-  // function follow_user(user_id) {
-  //   // call ajax
-
-  // }
-</script>
-
- <!-- not sign in -->
-
+    });
+  </script>
+  <% end %>
+<% else %>
 <script type="text/javascript">
   $('#follow_user').click(function() {
     Materialize.toast('Please sign in !', 4000,'rounded');
   });
 </script>
+<% end %>
