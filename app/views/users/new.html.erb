@@ -1,2 +1,41 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<% provide(:title, "#{@user.name} Blogger") %>
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h1 class="center flow-text">Sign up to Demo app</h1>
+      <%= form_for(@user) do |f| %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :name, class: valid_new_user_class(:name) %>
+            <label for="user_name">Your Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.email_field :email, class: valid_new_user_class(:email) %>
+            <label for="user_email">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.password_field :password, class: valid_new_user_class(:password) %>
+            <label for="user_password">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.password_field :password_confirmation, class: valid_new_user_class(:password) %>
+            <label for="user_password_confirmation">Password Confirmation</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 right-align">
+            <%= button_tag(type: "submit", class: "waves-effect waves-light btn-large") do %>
+              <i class="material-icons right">input</i> Sign up
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

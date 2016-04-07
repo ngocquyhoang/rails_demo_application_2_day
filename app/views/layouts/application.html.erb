@@ -51,6 +51,21 @@
       </div>
     </nav>
 
+    <% if has_flash() %>
+    <!-- notice box -->
+    <div class="container">
+      <div class="row">
+        <div class="card-panel <%= set_notice_type(flash) %> lighten-3 white-text">
+          <ul id="list_notice">
+            <% set_message(flash).each do |message|%>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
     <%= yield %>
 
     <!-- footer -->

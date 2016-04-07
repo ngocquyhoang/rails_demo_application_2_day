@@ -12,7 +12,13 @@
           <tbody>
             <thead>
               <tr>
-                  <th colspan="2" class="center flow-text"><%= @user.name %> 's Profile</th>
+                  <th colspan="2" class="center flow-text"><%= @user.name %> 's Profile
+                    <!-- if sign in -->
+                    <a href="#edit_user_detail" class="waves-effect waves-light btn-floating modal-trigger btn right <%= random_color %> tooltipped"  data-position="bottom" data-delay="0" data-tooltip="Edit your Frofile" data-id="<%= @user.id %>">
+                      <i class="material-icons">mode_edit</i>
+                    </a>
+
+                  </th>
               </tr>
             </thead>
             <tr>
@@ -25,14 +31,18 @@
             </tr>
             <tr>
               <td>Address</td>
-              <td class="right-align">No 13 Cau Giay, Ha Noi</td>
+              <td class="right-align" id="user_address">No 13 Cau Giay, Ha Noi</td>
             </tr>
             <tr>
               <td>Phone</td>
-              <td class="right-align">123456789</td>
+              <td class="right-align" id="user_phone">123456789</td>
             </tr>
             <tr>
               <td>Blog writed</td>
+              <td class="right-align">123</td>
+            </tr>
+            <tr>
+              <td>Follower</td>
               <td class="right-align">123</td>
             </tr>
           </tbody>
@@ -40,7 +50,7 @@
       </div>
     </div>
   </div>
-  <p class="center flow-text">Latest Blog</p>
+  <p class="center flow-text">Latest Blog <a class="btn-floating waves-effect waves-light btn-large <%= random_color %> right tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow <%= @user.name %>" data-follow="false" id="follow_user"><i class="large material-icons left">favorite</i>button</a></p>
   <div class="divider"></div>
   <div class="section">
     <div class="row">
@@ -86,3 +96,75 @@
     </div>
   </div>
 </div>
+<!-- if sign in -->
+<div id="edit_user_detail" class="modal">
+  <div class="modal-content">
+    <h4 class="flow-text center">Edit Your Profile</h4>
+    <div class="row" id="modal_content">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input disabled value="<%= @user.name %>" id="disabled" type="text" class="validate">
+            <label for="disabled">Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input disabled value="<%= @user.email %>" id="disabled" type="text" class="validate">
+            <label for="disabled">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="address" type="text" class="validate">
+            <label for="address">Address</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="phone" type="tel" class="validate">
+            <label for="phone">Phone</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
+    <a href="#" onclick="edit_profile(<%= @user.id %>)" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function edit_profile(user_id) {
+    // call ajax
+    var phone = $('#phone').val();
+    var address = $('#address').val();
+    $.ajax({
+      url: '/users/update_profile',
+      type: 'POST',
+      data: {phone: phone, address: address, id_user: <%= @user.id %>},
+      success: function(data) {
+        if (data["status"] == "success") {
+          Materialize.toast('Successfull update your profile !', 4000,'rounded');
+          $('#user_phone').val(data["phone"]);
+          $('#user_address').val(data["address"]); 
+        }
+      }
+    })
+  }
+  // $('#follow_user').click(function(event) {
+  //   follow_user();
+  // });
+
+  // function follow_user(user_id) {
+  //   // call ajax
+
+  // }
+</script>
+
+ <!-- not sign in -->
+
+<script type="text/javascript">
+  $('#follow_user').click(function() {
+    Materialize.toast('Please sign in !', 4000,'rounded');
+  });
+</script>

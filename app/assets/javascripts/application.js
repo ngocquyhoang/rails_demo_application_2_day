@@ -20,6 +20,7 @@
 $( document ).ready(function(){
   $(".button-collapse").sideNav();
   close_nav();
+  $('.modal-trigger').leanModal({dismissible: false});
 })
 function close_nav() {
   $("a.close-nav").click(function(){

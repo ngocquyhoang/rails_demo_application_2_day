@@ -2,187 +2,31 @@
 <div class="container">
   <div class="section">
     <div class="row">
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
+      <% @bloggers.each do |blogger|%>
+        <div class="col s12 m12 l6">
+          <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
+            <div class="row valign-wrapper">
+              <div class="col s2">
+                <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+              </div>
+              <div class="col s6">
+                <span class="white-text">
+                  <%= blogger.name %> <br />
+                  30 post 200 follower
+                </span>
+              </div>
+              <div class="col s4">
+                <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of <%= blogger.name %>"><i class="material-icons">picture_in_picture</i></a></div>
+                <div class="col s6">
+                  <%= link_to(blogger, class: "waves-effect waves-light btn-floating #{random_color} tooltipped", :data => {:position => "bottom", :delay => "0", :tooltip => "View #{blogger.name}", }) do %>
+                    <i class="material-icons">favorite</i>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m12 l6">
-        <div class="card-panel <%= random_color %> lighten-3 z-depth-0">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="http://www.mens-hairstyle.com/wp-content/uploads/2016/10/Spiky-Men-Hair-for-a-Round-Face.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s6">
-              <span class="white-text">
-                Hoang Ngoc Quy <br />
-                30 post 200 follower
-              </span>
-            </div>
-            <div class="col s4">
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="All blog of NgocQuyHoang"><i class="material-icons">picture_in_picture</i></a></div>
-              <div class="col s6"><a class="waves-effect waves-light btn-floating <%= random_color %> tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow NgocQuyHoang"><i class="material-icons">favorite</i></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>  
+      <% end %>
+    </div>
   </div>
 </div>
