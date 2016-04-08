@@ -6,6 +6,13 @@
         <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
           <%= gravatar_large_for @user %>
         </div>
+          <% if  user_signed_in? && @user == current_user %>
+            <div class="col s12 m12 l12 center">
+              <a href="#dashboard" class="dashboard waves-effect waves-light btn-large modal-trigger  tooltipped"  data-position="bottom" data-delay="0" data-tooltip="Open user Dashboard">
+                 Dashboard
+              </a>
+            </div>
+          <% end %>
       </div>
       <div class="col m9 l8">
         <table class="bordered">
@@ -158,6 +165,73 @@
       })
     };
   </script>
+  <!-- Dashboard -->
+  <div id="dashboard" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4 class="flow-text center" >User Dashboard</h4>
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s4"><a class="active" href="#blog">15 Blog</a></li>
+            <li class="tab col s4"><a href="#follower">4 Follower</a></li>
+            <li class="tab col s4"><a href="#avatar_setting">Avatar setting</a></li>
+          </ul>
+        </div>
+        <div id="blog" class="col s12">
+          <ul class="collection">
+            <li class="collection-item avatar">
+              <%= gravatar_thumbnail_for @user %>
+              <span class="title">Title</span>
+              <p>First Line
+              </p>
+              <ul class="secondary-content">
+              <li class="left"><a href="#!" class="<%= random_color %> waves-effect waves-light btn-floating"><i class="material-icons">mode_edit</i>
+              </a></li>
+              <li class="left"><a href="#!" class="<%= random_color %> waves-effect waves-light btn-floating"><i class="material-icons">visibility</i>
+              </a></li>
+              <li class="left"><a href="#!" class="<%= random_color %> waves-effect waves-light btn-floating"><i class="material-icons">delete</i>
+              </a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div id="follower" class="col s12">
+          <div class="section">
+            <div class="chip">
+              <img src="https://cdn.thingiverse.com/renders/16/04/2d/b5/ed/smiley_face_thumb_small.jpg" alt="Contact Person">
+              Jane Doe
+            </div>
+          </div>
+        </div>
+        <div id="avatar_setting" class="col s12">
+          <div class="section">
+            <div class="switch">
+              <label>
+                User Gravatar
+                <input type="checkbox">
+                <span class="lever"></span>
+                User Upload Avatar
+              </label>
+            </div>
+            <form action="#">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div> -->
+  </div>
   <% else %>
   <script type="text/javascript">
     $('#follow_user').click(function(event) {
