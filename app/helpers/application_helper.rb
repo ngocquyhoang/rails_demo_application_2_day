@@ -62,5 +62,8 @@ module ApplicationHelper
       return false
     end
   end
-  
+  # last blog
+  def last_blog_post
+    return Post.last(4).reverse
+  end
 end

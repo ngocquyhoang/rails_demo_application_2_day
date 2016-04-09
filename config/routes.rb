@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :posts, except: :destroy
+  resources :comments, only: [:create]
+  post 'delete_post' => 'posts#delete_post'
   get 'sign_in' => 'sessions#new'
   post 'sign_in' => 'sessions#create'
   delete 'sign_out' => 'sessions#destroy'
@@ -11,7 +14,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'home#index'
+  root 'posts#index'
   resources :users, only: [:index, :new, :create, :show]
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

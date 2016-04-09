@@ -1,0 +1,4 @@
+$('#comment_comment_content').val('');
+$('#comment_comment_content').blur();
+$('#comment_list').prepend('<div class="row"><div class="col s1 center"><%= gravatar_thumbnail_for(@comment.user) %></div><div class="col s11"><h5 class="comment-name"><%= @comment.user.name %></h5><p><%= @comment.comment_content %></p></div></div>');
+$('#no_comment_data').hide();

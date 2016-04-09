@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     else
       @user = User.new(user_params)
       if @user.save
-        flash.now[:success] = "Welcome to the Demo App!"
+        flash[:success] = "Welcome to the Demo App!"
         redirect_to @user
       else
         flash.now[:error] = @user.errors

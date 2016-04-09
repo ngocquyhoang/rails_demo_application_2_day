@@ -1,0 +1,15 @@
+<% if @post.comments.present? %>
+  <% @post.comments.reverse.each do |comment| %>
+  <div class="row">
+    <div class="col s1 center">
+      <%= gravatar_thumbnail_for(comment.user) %>
+    </div>
+    <div class="col s11">
+      <h5 class="comment-name"><%= comment.user.name %></h5>
+      <p><%= comment.comment_content %></p>
+    </div>
+  </div>
+  <% end %>
+<% else %>
+  <h2 class="flow-text center" id="no_comment_data">No comment <a href="#" onclick="$('#comment_comment_content').focus(); return false;">Comment now</a></h2>
+<% end %>

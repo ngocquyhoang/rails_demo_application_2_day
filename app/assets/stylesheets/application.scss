@@ -18,6 +18,7 @@ $primary-color: color("teal", "lighten-2") !default;
 @import "font-awesome";
 @import "materialize/extras/nouislider";
 @import "users.scss";
+@import "posts.scss";
 
 #pre-loader{
   width: 100%;
@@ -40,4 +41,13 @@ $primary-color: color("teal", "lighten-2") !default;
 #list_notice{
   margin-top: 0;
   margin-bottom: 0;
+}
+.italic{
+  font-style: italic;
+}
+.index-content-post{
+  font-size: 1.3em;
+}
+.title{
+  font-size: 1.8em;
 }

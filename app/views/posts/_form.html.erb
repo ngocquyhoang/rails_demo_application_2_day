@@ -1,0 +1,23 @@
+<div class="row flow-text">
+  <%= form_for(@post, :class => 'col s12') do |f| %>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.label :title, "Post Title" %>
+        <%= f.text_field :title, :required => true %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.label :content, 'Post Content' %>
+        <%= f.text_area :content, :class => 'materialize-textarea', rows: "5", :required => true %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12 right-align">
+        <%= button_tag(type: "submit", class: "waves-effect waves-light btn-large") do %>
+          <i class="material-icons right">mode_edit</i> Post
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

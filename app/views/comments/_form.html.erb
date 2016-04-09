@@ -1,0 +1,17 @@
+<div class="row">
+  <%= form_for(@comment, :remote => true) do |f| %>
+    <div class="row">
+      <div class="input-field col s10">
+      <i class="material-icons prefix">chat_bubble_outline</i>
+      <%= f.label :title, "Comment" %>
+      <%= f.text_area :comment_content, :required => true, :class => 'materialize-textarea' %>
+      <%= f.hidden_field :post_id, :value => @post.id%>
+      </div>
+      <div class="input-field col s2">
+        <%= button_tag(type: "submit", class: "waves-effect waves-light btn") do %>
+          <i class="material-icons">send</i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

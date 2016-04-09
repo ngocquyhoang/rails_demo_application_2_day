@@ -1,0 +1,23 @@
+<% provide(:title, truncate(strip_tags(@post.title), :length => 30 )) %>
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h1 class="title flow-text center col s12 m10 offset-m1 l10 offset-l1"><%= @post.title.upcase%></h1>
+      <p class="italic center"><%= @post.created_at.in_time_zone(7).strftime(" %m/%d/%Y") %> by <%= @post.user.name %></p>
+       <div class="col s12 m10 offset-m1 l10 offset-l1">
+       <p class="flow-text index-content-post"><%= @post.content %></p>
+       </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="col s12 m10 offset-m1 l10 offset-l1">
+      <h2 class="flow-text center">COMMENT</h2>
+      <% if user_signed_in? %>
+        <%= render 'comments/form'%>
+      <% end %>
+      <div id="comment_list">
+        <%= render 'comments/content'%>
+      </div>
+    </div>
+  </div>
+</div>

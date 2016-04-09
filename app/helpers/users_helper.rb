@@ -11,4 +11,11 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: "circle responsive-img")
   end
 
+  def this_user(user)
+    if user_signed_in? && user == current_user 
+      return true
+    else
+      return false
+    end
+  end
 end

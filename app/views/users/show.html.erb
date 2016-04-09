@@ -7,11 +7,7 @@
           <%= gravatar_large_for @user %>
         </div>
           <% if  user_signed_in? && @user == current_user %>
-            <div class="col s12 m12 l12 center">
-              <a href="#dashboard" class="dashboard waves-effect waves-light btn-large modal-trigger  tooltipped"  data-position="bottom" data-delay="0" data-tooltip="Open user Dashboard">
-                 Dashboard
-              </a>
-            </div>
+            <%= render "dashboard_control" %>
           <% end %>
       </div>
       <div class="col m9 l8">
@@ -21,9 +17,7 @@
               <tr>
                   <th colspan="2" class="center flow-text"><%= @user.name %> 's Profile
                     <% if  user_signed_in? && @user == current_user %>
-                    <a href="#edit_user_detail" class="waves-effect waves-light btn-floating modal-trigger btn right <%= random_color %> tooltipped"  data-position="bottom" data-delay="0" data-tooltip="Edit your Frofile" data-id="<%= @user.id %>">
-                      <i class="material-icons">mode_edit</i>
-                    </a>
+                      <%= render "user_detail_control" %>
                     <% end %>
                   </th>
               </tr>
@@ -46,7 +40,7 @@
             </tr>
             <tr>
               <td>Blog</td>
-              <td class="right-align">123</td>
+              <td class="right-align"><%= @user.posts.count %></td>
             </tr>
             <tr>
               <td>Follower</td>
@@ -57,7 +51,7 @@
       </div>
     </div>
   </div>
-  <p class="center flow-text">Latest Blog 
+  <p class="center flow-text">Latest Blog of <%= @user.name %>
   <% if  user_signed_in? && @user != current_user %>
     <a class="btn-floating waves-effect waves-light btn-large <%= random_color %> right tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow <%= @user.name %>" data-follow="true" id="follow_user"><i class="large material-icons left">favorite</i>button</a>
   <% end %>
@@ -65,194 +59,51 @@
   <div class="divider"></div>
   <div class="section">
     <div class="row">
-      <div class="col s12 m4 l4">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">Card Title</span>
-            <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
+      <% if @user.posts.present? %>
+        <% @user.posts.last(3).reverse.each do |last_post| %>
+          <div class="col s12 m4 l4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <span class="card-title"><%= truncate(strip_tags(last_post.title), :length => 25 ) %></span>
+                <p><%= truncate(strip_tags(last_post.content), :length => 80 )%></p>
+              </div>
+              <div class="card-action">
+                <%= link_to "Read more", last_post %>
+              </div>
+            </div>
           </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
-            <a href="#">This is a link</a>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 m4 l4">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">Card Title</span>
-            <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
-          </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
-            <a href="#">This is a link</a>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 m4 l4">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">Card Title</span>
-            <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
-          </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
-            <a href="#">This is a link</a>
-          </div>
-        </div>
-      </div>
+        <% end %>
+      <% else %>
+        <h2 class="flow-text center">Now <%= user_signed_in? && @user != current_user ? @user.name : "you" %> don't have a Blog <% if this_user(@user) %><%= link_to "Make it now", new_post_path %><% end %></h2>
+      <% end %>
     </div>
   </div>
 </div>
 <% if  user_signed_in? %>
   <% if @user == current_user %>
-  <div id="edit_user_detail" class="modal">
-    <div class="modal-content">
-      <h4 class="flow-text center">Edit Your Profile</h4>
-      <div class="row" id="modal_content">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s6">
-              <input disabled value="<%= @user.name %>" id="disabled" type="text" class="validate">
-              <label for="disabled">Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input disabled value="<%= @user.email %>" id="disabled" type="text" class="validate">
-              <label for="disabled">Email</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="address" type="text" class="validate" value="<%= @user.address %>">
-              <label for="address">Address</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="phone" type="tel" class="validate" value="<%= @user.phone %>">
-              <label for="phone">Phone</label>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a onclick="edit_profile(<%= @user.id %>)" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
-      <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-    </div>
-  </div>
-
-  <script type="text/javascript">
-    function edit_profile(user_id) {
-      var phone = $('#phone').val();
-      var address = $('#address').val();
-      $.ajax({
-        url: '/users/update_profile',
-        type: 'POST',
-        data: {phone: phone, address: address, id_user: <%= @user.id %>},
-        success: function(data) {
-          if (data["status"] == "success") {
-            Materialize.toast('Successfull update your profile !', 4000,'rounded');
-            $('#user_phone').text(data["phone"]);
-            $('#user_address').text(data["address"]); 
-          }else{
-            Materialize.toast('Error please reload page !', 4000,'rounded');
-          }
-        }
-      })
-    };
-  </script>
-  <!-- Dashboard -->
-  <div id="dashboard" class="modal bottom-sheet">
-    <div class="modal-content">
-      <h4 class="flow-text center" >User Dashboard</h4>
-      <div class="row">
-        <div class="col s12">
-          <ul class="tabs">
-            <li class="tab col s4"><a class="active" href="#blog">15 Blog</a></li>
-            <li class="tab col s4"><a href="#follower">4 Follower</a></li>
-            <li class="tab col s4"><a href="#avatar_setting">Avatar setting</a></li>
-          </ul>
-        </div>
-        <div id="blog" class="col s12">
-          <ul class="collection">
-            <li class="collection-item avatar">
-              <%= gravatar_thumbnail_for @user %>
-              <span class="title">Title</span>
-              <p>First Line
-              </p>
-              <ul class="secondary-content">
-              <li class="left"><a href="#!" class="<%= random_color %> waves-effect waves-light btn-floating"><i class="material-icons">mode_edit</i>
-              </a></li>
-              <li class="left"><a href="#!" class="<%= random_color %> waves-effect waves-light btn-floating"><i class="material-icons">visibility</i>
-              </a></li>
-              <li class="left"><a href="#!" class="<%= random_color %> waves-effect waves-light btn-floating"><i class="material-icons">delete</i>
-              </a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div id="follower" class="col s12">
-          <div class="section">
-            <div class="chip">
-              <img src="https://cdn.thingiverse.com/renders/16/04/2d/b5/ed/smiley_face_thumb_small.jpg" alt="Contact Person">
-              Jane Doe
-            </div>
-          </div>
-        </div>
-        <div id="avatar_setting" class="col s12">
-          <div class="section">
-            <div class="switch">
-              <label>
-                User Gravatar
-                <input type="checkbox">
-                <span class="lever"></span>
-                User Upload Avatar
-              </label>
-            </div>
-            <form action="#">
-              <div class="file-field input-field">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div> -->
-  </div>
+    <%= render "user_detail" %>
+    <%= render "dashboard" %>
   <% else %>
-  <script type="text/javascript">
-    $('#follow_user').click(function(event) {
-      if ($(this).attr('data-follow') == "false") {
-        // call ajax follow
-        // success
-        Materialize.toast('You are followed <%= @user.name%>' , 4000,'rounded');
-        $(this).attr('data-follow', "true");
-      }else{
-        // call ajax un follow
-        // success
-        Materialize.toast('You are unfollow <%= @user.name%>' , 4000,'rounded');
-        $(this).attr('data-follow', "false");
-      }
-    });
-  </script>
+    <script type="text/javascript">
+      $('#follow_user').click(function(event) {
+        if ($(this).attr('data-follow') == "false") {
+          // call ajax follow
+          // success
+          Materialize.toast('You are followed <%= @user.name%>' , 4000,'rounded');
+          $(this).attr('data-follow', "true");
+        }else{
+          // call ajax un follow
+          // success
+          Materialize.toast('You are unfollow <%= @user.name%>' , 4000,'rounded');
+          $(this).attr('data-follow', "false");
+        }
+      });
+    </script>
   <% end %>
 <% else %>
-<script type="text/javascript">
-  $('#follow_user').click(function() {
-    Materialize.toast('Please sign in !', 4000,'rounded');
-  });
-</script>
+  <script type="text/javascript">
+    $('#follow_user').click(function() {
+      Materialize.toast('Please sign in !', 4000,'rounded');
+    });
+  </script>
 <% end %>

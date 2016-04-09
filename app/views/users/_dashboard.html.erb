@@ -1,0 +1,101 @@
+<!-- Dashboard -->
+<div id="dashboard" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h4 class="flow-text center" >User Dashboard</h4>
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s4"><a class="active" href="#blog"><%= @user.posts.count %> Blog</a></li>
+          <li class="tab col s4"><a href="#follower">4 Follower</a></li>
+          <li class="tab col s4"><a href="#avatar_setting">Avatar setting</a></li>
+        </ul>
+      </div>
+      <div id="blog" class="col s12">
+        <ul class="collection">
+          <% @user.posts.reverse.each do |user_post| %>
+            <li id="post_num_<%= user_post.id %>" class="collection-item avatar">
+              <%= gravatar_thumbnail_for @user %>
+              <span class="title"><%= truncate(strip_tags(user_post.title), :length => 50 ) %></span>
+              <p>
+                <%= user_post.comments.count %> <i class="fa fa-comments"></i> 
+                <%= user_post.updated_at.in_time_zone(7).strftime(" %m/%d/%Y") %>
+              </p>
+              <ul class="secondary-content">
+                <li class="left">
+                  <%= link_to(edit_post_path(user_post), :class =>"waves-effect waves-light btn-floating #{random_color}" ) do %>
+                    <i class="material-icons">mode_edit</i>
+                  <% end %>
+                </li>
+                <li class="left">
+                  <%= link_to(user_post, :class =>"waves-effect waves-light btn-floating #{random_color}" ) do %>
+                    <i class="material-icons">visibility</i>
+                  <% end %>
+                </li>
+                <li class="left">
+                  <a class="<% random_color %>waves-effect waves-light btn-floating" onclick="del_post(<%= user_post.id %>)">
+                    <i class="material-icons">delete</i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div id="follower" class="col s12">
+        <div class="section">
+          <div class="chip">
+            <img src="https://cdn.thingiverse.com/renders/16/04/2d/b5/ed/smiley_face_thumb_small.jpg" alt="Contact Person">
+            Jane Doe
+          </div>
+        </div>
+      </div>
+      <div id="avatar_setting" class="col s12">
+        <div class="section">
+          <div class="switch">
+            <label>
+              User Gravatar
+              <input type="checkbox">
+              <span class="lever"></span>
+              User Upload Avatar
+            </label>
+          </div>
+          <form action="#">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div> -->
+</div>
+<script type="text/javascript">
+  function del_post (post_id) {
+    if (confirm('Do you want to delete this post?')) {
+      $.ajax({
+        url: '/delete_post',
+        type: 'POST',
+        data: {post_id: post_id},
+        success: function(data) {
+          if (data["status"] == "success") {
+            Materialize.toast('Successfull delete post', 4000,'rounded');
+            $("#post_num_"+post_id).hide();
+          }else{
+            Materialize.toast('Error please reload page !', 4000,'rounded');
+          }
+        }
+      })
+    } else {
+         return false;
+     }
+  }
+</script>

@@ -1,0 +1,56 @@
+<div id="edit_user_detail" class="modal">
+  <div class="modal-content">
+    <h4 class="flow-text center">Edit Your Profile</h4>
+    <div class="row" id="modal_content">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input disabled value="<%= @user.name %>" id="disabled" type="text" class="validate">
+            <label for="disabled">Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input disabled value="<%= @user.email %>" id="disabled" type="text" class="validate">
+            <label for="disabled">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="address" type="text" class="validate" value="<%= @user.address %>">
+            <label for="address">Address</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="phone" type="tel" class="validate" value="<%= @user.phone %>">
+            <label for="phone">Phone</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a onclick="edit_profile(<%= @user.id %>)" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function edit_profile(user_id) {
+    var phone = $('#phone').val();
+    var address = $('#address').val();
+    $.ajax({
+      url: '/users/update_profile',
+      type: 'POST',
+      data: {phone: phone, address: address, id_user: <%= @user.id %>},
+      success: function(data) {
+        if (data["status"] == "success") {
+          Materialize.toast('Successfull update your profile !', 4000,'rounded');
+          $('#user_phone').text(data["phone"]);
+          $('#user_address').text(data["address"]); 
+        }else{
+          Materialize.toast('Error please reload page !', 4000,'rounded');
+        }
+      }
+    })
+  };
+</script>

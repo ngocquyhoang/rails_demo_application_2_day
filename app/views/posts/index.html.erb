@@ -1,0 +1,40 @@
+<% provide(:title, "Blog") %>
+<div class="container">
+  <div class="section">
+  <% @posts.each do |post| %>
+    <div class="row">
+      <h1 class="title flow-text center col s12 m10 offset-m1 l10 offset-l1">
+        <%= link_to post.title.upcase , post %>
+      </h1>
+      <p class="italic center"><%= post.created_at.in_time_zone(7).strftime(" %m/%d/%Y") %></p>
+      <div class="col s12 m10 offset-m1 l10 offset-l1">
+        <blockquote><p class="flow-text index-content-post"><%= truncate(strip_tags(post.content), :length => 350 ) %></p> </blockquote>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% if user_signed_in? %>
+<div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">invert_colors</i>
+    </a>
+    <ul>
+      <li>
+        <%= link_to(new_post_path, :class => "btn-floating red tooltipped", :data => { :position => 'top', :delay => '50', :tooltip => 'Write new Blog' } ) do %>
+          <i class="material-icons">mode_edit</i>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to(current_user, :class => "btn-floating yellow tooltipped", :data => { :position => 'top', :delay => '50', :tooltip => 'Your Profile' } ) do %>
+          <i class="material-icons">credit_card</i>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to(sign_out_path, :method => "delete", :class => "btn-floating green tooltipped", :data => { :position => 'top', :delay => '50', :tooltip => 'Sign out' } ) do %>
+          <i class="material-icons">power_settings_new</i>
+        <% end %>
+      </li>
+    </ul>
+</div>
+<% end  %>
