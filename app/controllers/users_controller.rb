@@ -4,6 +4,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def upload_avatar
+    byebug
+    if user_signed_in? && current_user == User.find(params[:user_id])
+      current_user.avatar = params[:avatar]
+    end
+  end
+
   def index
     redirect_to blogger_path
   end
@@ -23,11 +30,27 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       if @user.save
         flash[:success] = "Welcome to the Demo App!"
+        sign_in @user
         redirect_to @user
       else
         flash.now[:error] = @user.errors
         render 'new'
       end
+    end
+  end
+
+  def follow
+    # byebug
+    if user_signed_in?
+      if params[:status_fl] == "false"
+        current_user.follow(User.find(params[:user_id]))
+        render json:{status: "success" }
+      else
+        current_user.unfollow(User.find(params[:user_id]))
+        render json:{status: "success" }
+      end
+    else
+      render json:{status: "error" }
     end
   end
 
@@ -54,4 +77,5 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password,:password_confirmation)
     end
+
 end

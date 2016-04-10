@@ -1,5 +1,5 @@
 class BloggerController < ApplicationController
   def index
-    @bloggers = User.all
+    @bloggers = User.all.reverse
   end
 end

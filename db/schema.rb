@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160409031058) do
+ActiveRecord::Schema.define(version: 20160410130339) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "comment_content", limit: 65535
@@ -29,14 +29,27 @@ ActiveRecord::Schema.define(version: 20160409031058) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "follower_id", limit: 4
+    t.integer  "followed_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
   create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 255, null: false
-    t.string   "email",           limit: 255, null: false
-    t.string   "phone",           limit: 255
-    t.string   "address",         limit: 255
-    t.string   "password_digest", limit: 255, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "name",               limit: 255,                   null: false
+    t.string   "email",              limit: 255,                   null: false
+    t.string   "phone",              limit: 255
+    t.string   "address",            limit: 255
+    t.string   "password_digest",    limit: 255,                   null: false
+    t.text     "avatar",             limit: 65535
+    t.boolean  "user_custom_avatar",               default: false, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
 end

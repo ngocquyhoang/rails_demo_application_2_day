@@ -9,7 +9,9 @@ gem 'rails-assets-tether', '>= 1.1.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
+gem 'carrierwave'
+gem 'cloudinary'
+gem 'will_paginate'
 gem 'mysql2', '~> 0.3.18'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

@@ -8,11 +8,20 @@
   margin-top: 70px;
 }
 #modal_content{
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 .dashboard{
-	margin-top: 30px;
+  margin-top: 30px;
 }
 .secondary-content > .left{
-	margin-left: 7px;
+  margin-left: 7px;
+}
+#avatar_setting .section > .row{
+  margin-bottom: 0;
+  form > .row{
+    margin-bottom: 0;
+  }
+}
+.modal-content > .row{
+  margin-bottom: 0;
 }

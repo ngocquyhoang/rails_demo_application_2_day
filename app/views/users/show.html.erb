@@ -44,7 +44,11 @@
             </tr>
             <tr>
               <td>Follower</td>
-              <td class="right-align">123</td>
+              <td class="right-align"><%= @user.followers.count %></td>
+            </tr>
+            <tr>
+              <td>Following</td>
+              <td class="right-align"><%= @user.following.count %></td>
             </tr>
           </tbody>
         </table>
@@ -53,7 +57,7 @@
   </div>
   <p class="center flow-text">Latest Blog of <%= @user.name %>
   <% if  user_signed_in? && @user != current_user %>
-    <a class="btn-floating waves-effect waves-light btn-large <%= random_color %> right tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow <%= @user.name %>" data-follow="true" id="follow_user"><i class="large material-icons left">favorite</i>button</a>
+    <a class="btn-floating waves-effect waves-light btn-large <%= random_color %> right tooltipped" data-position="bottom" data-delay="0" data-tooltip="Follow <%= @user.name %>" data-follow="<%= current_user.following?(@user) ? 'true' : 'false' %>" id="follow_user"><i class="large material-icons left">favorite</i>button</a>
   <% end %>
   </p>
   <div class="divider"></div>
@@ -86,17 +90,25 @@
   <% else %>
     <script type="text/javascript">
       $('#follow_user').click(function(event) {
-        if ($(this).attr('data-follow') == "false") {
-          // call ajax follow
-          // success
-          Materialize.toast('You are followed <%= @user.name%>' , 4000,'rounded');
-          $(this).attr('data-follow', "true");
-        }else{
-          // call ajax un follow
-          // success
-          Materialize.toast('You are unfollow <%= @user.name%>' , 4000,'rounded');
-          $(this).attr('data-follow', "false");
-        }
+        var status_fl = $(this).attr('data-follow');
+        $.ajax({
+          url: '/follow',
+          type: 'POST',
+          data: {status_fl: status_fl, user_id: <%= @user.id  %>},
+          success: function(data) {
+            if (data["status"] == "success") {
+              if($('#follow_user').attr('data-follow') == "true"){
+                $('#follow_user').attr('data-follow', 'false');
+                Materialize.toast('You are unfollow <%= @user.name%>' , 4000,'rounded');
+              }else{
+                $('#follow_user').attr('data-follow', 'true');
+                Materialize.toast('You are following <%= @user.name%>' , 4000,'rounded');
+              };
+            }else{
+              Materialize.toast('Error please reload page !', 4000,'rounded');
+            }
+          }
+        });
       });
     </script>
   <% end %>

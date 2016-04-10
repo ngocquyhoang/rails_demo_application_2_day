@@ -1,6 +1,7 @@
 <% provide(:title, "Blog") %>
 <div class="container">
   <div class="section">
+  <% if @posts.present? %>
   <% @posts.each do |post| %>
     <div class="row">
       <h1 class="title flow-text center col s12 m10 offset-m1 l10 offset-l1">
@@ -12,8 +13,19 @@
       </div>
     </div>
   <% end %>
+  <% else %>
+    <h1 class="title flow-text center col s12 m10 offset-m1 l10 offset-l1">We don't have a Blog
+    <%= link_to "Write now", new_post_path %>
+    </h1>
+  <% end %>
+  </div>
+  <div class="row center">
+    <%= will_paginate @posts %>
   </div>
 </div>
+
+
+
 <% if user_signed_in? %>
 <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
     <a class="btn-floating btn-large red">
